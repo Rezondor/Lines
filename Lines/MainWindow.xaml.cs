@@ -1,6 +1,4 @@
-﻿using Lines.Models;
-using System.Windows;
-using System.Windows.Input;
+﻿using System.Windows;
 
 namespace Lines
 {
