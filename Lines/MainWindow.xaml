@@ -3,10 +3,57 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Lines"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:localModel="clr-namespace:Lines.Models" 
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <Window.DataContext>
+        <localModel:LineModel/>
+    </Window.DataContext>
 
+    <i:Interaction.Triggers>
+        <i:EventTrigger 
+            EventName="MouseMove">
+            <i:InvokeCommandAction
+                 Command="{Binding UpdateEndPos}"/>
+        </i:EventTrigger>
+        <i:EventTrigger 
+            EventName="MouseLeftButtonUp">
+            <i:InvokeCommandAction
+                Command="{Binding UpdateStartPos}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Border
+            BorderBrush="Black"
+            BorderThickness="1">
+            <Line 
+                X1="{Binding XStart}" 
+                X2="{Binding XEnd}" 
+                Y1="{Binding YStart}" 
+                Y2="{Binding YEnd}" 
+                StrokeThickness="1" 
+                Stroke="{Binding LineColor}"/>
+        </Border>
+        <Border 
+            Grid.Column="2"
+            BorderBrush="Black"
+            BorderThickness="1">
+            <StackPanel 
+                Margin="5">
+                <TextBlock 
+                    Text="Цвет линии"  
+                    Margin="5 0"/>
+                <ComboBox 
+                    Margin="5"
+                    DisplayMemberPath="Color"
+                    SelectedItem="{Binding LineColor}" 
+                    ItemsSource="{Binding ActiveColors}"/>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>
